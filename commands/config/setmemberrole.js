@@ -4,7 +4,7 @@ const GuildConfig = require('../../events/database/models/GuildConfig');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('setmemberrole')
-    .setDescription('Establece el rol que se dará al verificar')
+    .setDescription('🛠️ Establece el rol que se dará al verificar')
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addRoleOption(option =>
       option.setName('rol')

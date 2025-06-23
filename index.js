@@ -53,7 +53,7 @@ async function registerCommands() {
 
   try {
     await rest.put(
-      Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.SERVER_ID),
+      Routes.applicationCommands(process.env.CLIENT_ID), //Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.SERVER_ID)
       {
         body: client.commands.map(cmd => cmd.data.toJSON())
       }

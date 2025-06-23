@@ -71,12 +71,18 @@ module.exports = {
             //EXISTEN "STATE" "NAME" "DETAILS"
             client.user.setActivity(descripcion, activityOptions);
 
-            await interaction.reply(`Status actualizado a: ${activityTypes[actividad]} ${descripcion}${url ? ` (URL: ${url})` : ''}`);
+            const msg = await interaction.reply({ content: `Status actualizado a: ${activityTypes[actividad]} ${descripcion}${url ? ` (URL: ${url})` : ''}`, ephemeral: true });
+            setTimeout(() => {
+                msg.delete().catch(console.error);
+            }, 5000);
         }
         catch (error) {
             console.error(error);
-            await interaction.reply({ content: 'Hubo un error actualizando el estado.', ephemeral: true })
+            const msg = await interaction.reply({ content: 'Hubo un error actualizando el estado.', ephemeral: true })
                 .then(sentMessage => { setTimeout(() => { sentMessage.delete().catch(console.error) }, 30000) });
+            setTimeout(() => {
+                msg.delete().catch(console.error);
+            }, 5000);
         }
     }
 };
