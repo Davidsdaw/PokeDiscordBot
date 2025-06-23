@@ -3,12 +3,12 @@ const GuildConfig = require("../../events/database/models/GuildConfig");
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("seteventchannel")
-        .setDescription("🛠️ Establece el canal donde se enviarán los eventos de captura.")
+        .setName("setwelcomechannel")
+        .setDescription("👋 Establece el canal donde se enviarán los mensajes de bienvenida.")
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .addChannelOption(option => 
             option.setName("canal")
-                .setDescription("Canal para los eventos de captura.")
+                .setDescription("Canal para los mensajes de bienvenida.")
                 .setRequired(true)
                 .addChannelTypes(ChannelType.GuildText)
         ),
@@ -23,20 +23,20 @@ module.exports = {
             if (!config) {
                 config = new GuildConfig({
                     guildId,
-                    eventChannelID: canal.id
+                    welcomeChannelId: canal.id
                 });
             } else {
-                config.eventChannelID = canal.id;
+                config.welcomeChannelId = canal.id;
             }
 
             await config.save();
 
             await interaction.reply({
-                content: `✅ El canal de eventos ha sido establecido a <#${canal.id}>`,
+                content: `✅ El canal de bienvenida ha sido establecido a <#${canal.id}>`,
                 ephemeral: true
             });
         } catch (error) {
-            console.error("Error al guardar el canal de eventos:", error);
+            console.error("Error al guardar el canal de bienvenida:", error);
             await interaction.reply({
                 content: "❌ Ocurrió un error al guardar el canal. Inténtalo de nuevo más tarde.",
                 ephemeral: true

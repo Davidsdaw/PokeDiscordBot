@@ -4,7 +4,7 @@ const GuildConfig = require('../../events/database/models/GuildConfig');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('setlanguage')
-    .setDescription('Cambia el idioma del bot en este servidor')
+    .setDescription('🛠️ Cambia el idioma del bot en este servidor')
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addStringOption(option =>
       option

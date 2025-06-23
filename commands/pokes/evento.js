@@ -4,7 +4,7 @@ const GuildConfig = require("../../events/database/models/GuildConfig");
 module.exports = {
     data: new Discord.SlashCommandBuilder()
         .setName("eventocaptura")
-        .setDescription("El bot dirá lo que quieras")
+        .setDescription("🎟️ Crear un evento de captura")
         .setDefaultMemberPermissions(Discord.PermissionFlagsBits.Administrator)
         .addStringOption(option => option.setName("descripcion").setDescription("Descripcion del evento").setRequired(true))
         .addStringOption(option => option.setName("pokemon").setDescription("Que pokemon capturar").setRequired(true))

@@ -66,7 +66,17 @@ async function registerCommands() {
 
 client.once('ready', async () => {
   console.log(`✅ Bot listo como ${client.user.tag}`);
+
   await registerCommands();
+
+  try {
+    client.user.setActivity('Follandome a la gorda de Besttor', { type: 4 });
+    console.log('✅➡️  Status establecido');
+  } catch (error) {
+    console.error('❌➡️ Error al establecer el estado:', error);
+  }
 });
 
+
+require('./events/messageLog')(client);
 client.login(process.env.BOT_TOKEN);

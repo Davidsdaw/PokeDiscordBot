@@ -27,6 +27,9 @@ module.exports = {
         .setRequired(true)),
 
   async execute(interaction) {
+
+
+
     const nick = interaction.options.getString('nick');
     const foto1 = interaction.options.getAttachment('foto1');
     const foto2 = interaction.options.getAttachment('foto2');
@@ -40,6 +43,13 @@ module.exports = {
     const verifyChannel = await interaction.guild.channels.fetch(config.verifyChannelId);
     if (!verifyChannel) {
       return interaction.reply({ content: '❌ No se encontró el canal de verificación.', flags: 64 });
+    }
+
+    if (config?.allowedVerifyChannelId && interaction.channel.id !== config.allowedVerifyChannelId) {
+      return interaction.reply({
+        content: `❌ Este comando solo se puede usar en <#${config.allowedVerifyChannelId}>.`,
+        ephemeral: true,
+      });
     }
 
     const embed = new EmbedBuilder()

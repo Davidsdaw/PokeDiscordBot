@@ -38,7 +38,7 @@ module.exports = {
 
       userLevel.xp += xpToAdd;
 
-      const xpNeeded = userLevel.level * 100;
+      const xpNeeded = Math.floor(100 * Math.pow(1.5, userLevel.level - 1));
 
       if (userLevel.xp >= xpNeeded) {
         userLevel.level++;

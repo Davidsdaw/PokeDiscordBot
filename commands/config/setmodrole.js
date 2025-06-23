@@ -4,7 +4,7 @@ const GuildConfig = require('../../events/database/models/GuildConfig');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('setmodrole')
-    .setDescription('Configura el rol de moderadores del servidor')
+    .setDescription('🛠️ Configura el rol de moderadores del servidor')
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addRoleOption(option =>
       option

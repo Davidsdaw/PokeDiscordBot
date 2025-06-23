@@ -5,7 +5,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('setverifychannel')
         .setDescription('🛠️ Establece el canal donde se enviarán las verificaciones')
-        .setDMPermission(false)
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .addChannelOption(option =>
             option
                 .setName('canal')

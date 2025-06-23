@@ -1,9 +1,9 @@
-const { SlashCommandBuilder , PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('status')
-        .setDescription('Establece el status del bot')
+        .setDescription('📺 Establece el status del bot')
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .setDMPermission(false)
         .addIntegerOption(option =>
@@ -33,35 +33,50 @@ module.exports = {
         ),
     execute: async (interaction, client) => {
 
-            const actividad = interaction.options.getInteger('actividad');
-            const descripcion = interaction.options.getString('descripcion');
-            const url = interaction.options.getString('url');
-    
-            const activityTypes = [
-                'PLAYING',   // Jugando
-                'STREAMING', // Transmitiendo
-                'LISTENING', // Escuchando
-                'WATCHING',  // Viendo
-                'CUSTOM',    // Custom
-                'COMPETING'  // Competing
-            ];
-    
-            try {
-                if (actividad === 1 && !url) {
-                    return interaction.reply({ content: 'La URL es requerida para la actividad "Transmitiendo".', ephemeral: true })
-                    .then(sentMessage => {setTimeout(() => {sentMessage.delete().catch(console.error)}, 30000)});
-                }
-    
-                const activityOptions = { type: actividad, url: actividad === 1 ? url : undefined};
-                //EXISTEN "STATE" "NAME" "DETAILS"
-                client.user.setActivity(descripcion, activityOptions);
-                
-                await interaction.reply(`Status actualizado a: ${activityTypes[actividad]} ${descripcion}${url ? ` (URL: ${url})` : ''}`);
-            } 
-            catch (error) {
-                console.error(error);
-                await interaction.reply({ content: 'Hubo un error actualizando el estado.', ephemeral: true })
-                .then(sentMessage => {setTimeout(() => {sentMessage.delete().catch(console.error)}, 30000)});
+        const allowedUserId = '555065265679892500';
+        if (interaction.user.id !== allowedUserId) {
+            const replyMessage = await interaction.reply({
+                content: '❌ Solo el creador del bot puede usar este comando.',
+                ephemeral: true,
+                fetchReply: true
+            });
+
+            setTimeout(() => {
+                replyMessage.delete().catch(() => { });
+            }, 5000);
+
+            return;
+        }
+
+        const actividad = interaction.options.getInteger('actividad');
+        const descripcion = interaction.options.getString('descripcion');
+        const url = interaction.options.getString('url');
+
+        const activityTypes = [
+            'PLAYING',   // Jugando
+            'STREAMING', // Transmitiendo
+            'LISTENING', // Escuchando
+            'WATCHING',  // Viendo
+            'CUSTOM',    // Custom
+            'COMPETING'  // Competing
+        ];
+
+        try {
+            if (actividad === 1 && !url) {
+                return interaction.reply({ content: 'La URL es requerida para la actividad "Transmitiendo".', ephemeral: true })
+                    .then(sentMessage => { setTimeout(() => { sentMessage.delete().catch(console.error) }, 30000) });
             }
+
+            const activityOptions = { type: actividad, url: actividad === 1 ? url : undefined };
+            //EXISTEN "STATE" "NAME" "DETAILS"
+            client.user.setActivity(descripcion, activityOptions);
+
+            await interaction.reply(`Status actualizado a: ${activityTypes[actividad]} ${descripcion}${url ? ` (URL: ${url})` : ''}`);
+        }
+        catch (error) {
+            console.error(error);
+            await interaction.reply({ content: 'Hubo un error actualizando el estado.', ephemeral: true })
+                .then(sentMessage => { setTimeout(() => { sentMessage.delete().catch(console.error) }, 30000) });
+        }
     }
 };

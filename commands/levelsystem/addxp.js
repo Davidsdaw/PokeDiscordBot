@@ -5,7 +5,7 @@ const GuildConfig = require('../../events/database/models/GuildConfig');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('addxp')
-    .setDescription('Añade XP a un usuario')
+    .setDescription('➕ Añade XP a un usuario')
     .addUserOption(option => option.setName('usuario').setDescription('Usuario a añadir XP').setRequired(true))
     .addIntegerOption(option => option.setName('cantidad').setDescription('Cantidad de XP').setRequired(true)),
 

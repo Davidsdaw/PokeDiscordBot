@@ -5,7 +5,7 @@ const GuildConfig = require('../../events/database/models/GuildConfig');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('removexp')
-    .setDescription('Quita XP a un usuario')
+    .setDescription('➖ Quita XP a un usuario')
     .addUserOption(option => option.setName('usuario').setDescription('Usuario al que quitar XP').setRequired(true))
     .addIntegerOption(option => option.setName('cantidad').setDescription('Cantidad de XP a quitar').setRequired(true)),
 

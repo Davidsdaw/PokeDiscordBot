@@ -33,6 +33,22 @@ const guildConfigSchema = new mongoose.Schema({
   eventChannelID: {
     type: String,
     default: null
+  },
+  allowedCommandChannelId: {
+    type: String,
+    default: null
+  },
+  allowedVerifyChannelId: {
+    type: String,
+    default: null
+  },
+    welcomeChannelId: {
+    type: String,
+    default: null
+  },
+    goodbyeChannelId: {
+    type: String,
+    default: null
   }
 });
 

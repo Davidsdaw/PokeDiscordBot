@@ -4,7 +4,7 @@ const GuildConfig = require('../../events/database/models/GuildConfig');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('setlogchannel')
-    .setDescription('Configura el canal de logs del servidor')
+    .setDescription('🛠️ Configura el canal de logs del servidor')
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addChannelOption(option =>
       option
