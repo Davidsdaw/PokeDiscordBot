@@ -29,6 +29,10 @@ const guildConfigSchema = new mongoose.Schema({
   memberRoleId: {
     type: String,
     default: null
+  },
+  eventChannelID: {
+    type: String,
+    default: null
   }
 });
 
