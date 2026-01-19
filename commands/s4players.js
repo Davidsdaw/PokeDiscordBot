@@ -4,7 +4,7 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('players')
+    .setName('s4players')
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .setDescription('Responde con los jugadores de s4!'),
 
