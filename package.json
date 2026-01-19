@@ -10,10 +10,12 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@supabase/supabase-js": "^2.90.1",
     "canvas": "^3.1.1",
     "discord.js": "^14.20.0",
     "dotenv": "^16.5.0",
     "mongoose": "^8.16.0",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "supabase": "^2.72.8"
   }
 }

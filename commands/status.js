@@ -1,15 +1,16 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const Discord = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('status')
         .setDescription('📺 Establece el status del bot')
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
-        .setDMPermission(false)
+        .setContexts(Discord.ApplicationCommandType.ChatInput)
         .addIntegerOption(option =>
             option
                 .setName('actividad')
-                .setDescription('El tipo de actividad (0: Jugando, 1: Transmitiendo, 2: Escuchando, 3: Viendo)')
+                .setDescription('Tipo de actividad (0: Jugando, 1: Transmitiendo, 2: Escuchando, 3: Viendo)')
                 .setRequired(true)
                 .addChoices(
                     { name: 'Jugando', value: 0 },
@@ -31,58 +32,34 @@ module.exports = {
                 .setName('url')
                 .setDescription('URL de transmisión (solo requerido para "Transmitiendo")')
         ),
-    execute: async (interaction, client) => {
+    execute: async (interaction) => {
 
         const allowedUserId = '555065265679892500';
         if (interaction.user.id !== allowedUserId) {
-            const replyMessage = await interaction.reply({
-                content: '❌ Solo el creador del bot puede usar este comando.',
-                ephemeral: true,
-                fetchReply: true
-            });
-
-            setTimeout(() => {
-                replyMessage.delete().catch(() => { });
-            }, 5000);
-
-            return;
+            return interaction.reply({ content: '❌ Solo el creador del bot puede usar este comando.', ephemeral: true });
         }
 
         const actividad = interaction.options.getInteger('actividad');
         const descripcion = interaction.options.getString('descripcion');
         const url = interaction.options.getString('url');
 
-        const activityTypes = [
-            'PLAYING',   // Jugando
-            'STREAMING', // Transmitiendo
-            'LISTENING', // Escuchando
-            'WATCHING',  // Viendo
-            'CUSTOM',    // Custom
-            'COMPETING'  // Competing
-        ];
+        const activityTypes = ['PLAYING', 'STREAMING', 'LISTENING', 'WATCHING', 'CUSTOM', 'COMPETING'];
+
+        if (actividad === 1 && !url) {
+            return interaction.reply({ content: 'La URL es requerida para "Transmitiendo".', ephemeral: true });
+        }
 
         try {
-            if (actividad === 1 && !url) {
-                return interaction.reply({ content: 'La URL es requerida para la actividad "Transmitiendo".', ephemeral: true })
-                    .then(sentMessage => { setTimeout(() => { sentMessage.delete().catch(console.error) }, 30000) });
-            }
-
             const activityOptions = { type: actividad, url: actividad === 1 ? url : undefined };
-            //EXISTEN "STATE" "NAME" "DETAILS"
-            client.user.setActivity(descripcion, activityOptions);
+            interaction.client.user.setActivity(descripcion, activityOptions);
 
-            const msg = await interaction.reply({ content: `Status actualizado a: ${activityTypes[actividad]} ${descripcion}${url ? ` (URL: ${url})` : ''}`, ephemeral: true });
-            setTimeout(() => {
-                msg.delete().catch(console.error);
-            }, 5000);
-        }
-        catch (error) {
+            await interaction.reply({
+                content: `✅ Status actualizado a: ${activityTypes[actividad]} ${descripcion}${url ? ` (URL: ${url})` : ''}`,
+                ephemeral: true
+            });
+        } catch (error) {
             console.error(error);
-            const msg = await interaction.reply({ content: 'Hubo un error actualizando el estado.', ephemeral: true })
-                .then(sentMessage => { setTimeout(() => { sentMessage.delete().catch(console.error) }, 30000) });
-            setTimeout(() => {
-                msg.delete().catch(console.error);
-            }, 5000);
+            await interaction.reply({ content: '❌ Hubo un error actualizando el estado.', ephemeral: true });
         }
     }
 };
