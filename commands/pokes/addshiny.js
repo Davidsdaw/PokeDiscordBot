@@ -29,35 +29,35 @@ module.exports = {
         .addNumberOption(option => option.setName("spe").setDescription("IVs SPE shiny").setRequired(true))
         .addBooleanOption(option => option.setName("secret").setDescription("¿Es un Shiny secret ?").setRequired(true))
         .addStringOption(option => option.setName("naturaleza").setDescription("Naturaleza del shiny").setRequired(true)
-        .addChoices(
-            { name: 'Osada', value: 'Osada' },
-            { name: 'Modesta', value: 'Modesta' },
-            { name: 'Serena', value: 'Serena' },
-            { name: 'Miedosa', value: 'Miedosa' },
-            { name: 'Huraña', value: 'Huraña' },
-            { name: 'Afable', value: 'Afable' },
-            { name: 'Amable', value: 'Amable' },
-            { name: 'Activa', value: 'Activa' },
-            { name: 'Firme', value: 'Firme' },
-            { name: 'Agitada', value: 'Agitada' },
-            { name: 'Cauta', value: 'Cauta' },
-            { name: 'Alegre', value: 'Alegre' },
-            { name: 'Pícara', value: 'Picara' },
-            { name: 'Floja', value: 'Floja' },
-            { name: 'Alocada', value: 'Alocada' },
-            { name: 'Ingenua', value: 'Ingenua' },
-            { name: 'Audaz', value: 'Audaz' },
-            { name: 'Plácida', value: 'Placida' },
-            { name: 'Mansa', value: 'Mansa' },
-            { name: 'Grosera', value: 'Grosera' },
-            { name: 'Fuerte', value: 'Fuerte' },
-            { name: 'Dócil', value: 'Docil' },
-            { name: 'Seria', value: 'Seria' },
-            { name: 'Tímida', value: 'Timida' },
-            { name: 'Rara', value: 'Rara' },
-        ))
-    ,   
-    
+            .addChoices(
+                { name: 'Osada', value: 'Osada' },
+                { name: 'Modesta', value: 'Modesta' },
+                { name: 'Serena', value: 'Serena' },
+                { name: 'Miedosa', value: 'Miedosa' },
+                { name: 'Huraña', value: 'Huraña' },
+                { name: 'Afable', value: 'Afable' },
+                { name: 'Amable', value: 'Amable' },
+                { name: 'Activa', value: 'Activa' },
+                { name: 'Firme', value: 'Firme' },
+                { name: 'Agitada', value: 'Agitada' },
+                { name: 'Cauta', value: 'Cauta' },
+                { name: 'Alegre', value: 'Alegre' },
+                { name: 'Pícara', value: 'Picara' },
+                { name: 'Floja', value: 'Floja' },
+                { name: 'Alocada', value: 'Alocada' },
+                { name: 'Ingenua', value: 'Ingenua' },
+                { name: 'Audaz', value: 'Audaz' },
+                { name: 'Plácida', value: 'Placida' },
+                { name: 'Mansa', value: 'Mansa' },
+                { name: 'Grosera', value: 'Grosera' },
+                { name: 'Fuerte', value: 'Fuerte' },
+                { name: 'Dócil', value: 'Docil' },
+                { name: 'Seria', value: 'Seria' },
+                { name: 'Tímida', value: 'Timida' },
+                { name: 'Rara', value: 'Rara' },
+            ))
+    ,
+
     async execute(interaction) {
         const discordId = interaction.user.id;
         const pokemonName = interaction.options.getString("pokemon");
@@ -75,6 +75,27 @@ module.exports = {
         const secret = interaction.options.getBoolean("secret");
         const naturaleza = interaction.options.getString("naturaleza");
 
+        const ROLE_ID = process.env.ROLE_ID;
+        if (!interaction.member.roles.cache.has(ROLE_ID)) {
+            const emmbed = new Discord.EmbedBuilder()
+                .setTitle("❌ Error")
+                .setDescription("No tienes permiso para usar este comando, necesitas ser miembro.")
+                .setColor(Discord.Colors.Red);
+            return interaction.editReply({
+                embeds: [emmbed]
+            });
+        }
+
+        const ALLOWED_CHANNEL_ID = process.env.ALLOWED_CHANNEL_ID;
+
+        if (interaction.channelId !== ALLOWED_CHANNEL_ID) {
+            const embed = new Discord.EmbedBuilder()
+                .setTitle("❌ Canal incorrecto")
+                .setDescription("Este comando solo puede usarse en el canal autorizado.")
+                .setColor(Discord.Colors.Red);
+
+            return interaction.editReply({ embeds: [embed], ephemeral: true });
+        }
 
         // Año tiene que ser 4 digitos mayor o igual a 2012
 
@@ -116,7 +137,7 @@ module.exports = {
                 const embed = new Discord.EmbedBuilder()
                     .setTitle("❌ Error")
                     .setDescription("Los IVs deben estar entre 0 y 31")
-                    .setColor(Discord.Colors.Red);  
+                    .setColor(Discord.Colors.Red);
                 await interaction.reply({ embeds: [embed], ephemeral: true });
                 return;
             }
@@ -144,7 +165,7 @@ module.exports = {
                 .setDescription("No estás registrado. Usa el comando /register para registrarte.")
                 .setColor(Discord.Colors.Red);
             await interaction.reply({ embeds: [embed], ephemeral: true });
-            }  else {
+        } else {
             // Agregar el shiny a la base de datos
             const { error } = await supabase
                 .from('shinies')
@@ -184,6 +205,6 @@ module.exports = {
                     .setTimestamp();
                 await interaction.reply({ embeds: [embed], ephemeral: true });
             }
+        }
     }
 }
-    }
