@@ -8,7 +8,7 @@ async function safeReply(user, interaction, embed) {
     try {
         await user.send({ embeds: [embed] });
         dmSent = true;
-    } catch {}
+    } catch { }
 
     if (dmSent) {
         await interaction.editReply({ content: "📩 Te he enviado la información por privado." });
@@ -29,6 +29,29 @@ module.exports = {
 
     async execute(interaction) {
         await interaction.deferReply({ ephemeral: true });
+
+        const ROLE_ID = process.env.ROLE_ID;
+        const ALLOWED_CHANNEL_ID = process.env.ALLOWED_CHANNEL_ID;
+
+        if (interaction.channelId !== ALLOWED_CHANNEL_ID) {
+            const embed = new Discord.EmbedBuilder()
+                .setTitle("❌ Canal incorrecto")
+                .setDescription("Este comando solo puede usarse en el canal autorizado.")
+                .setColor(Discord.Colors.Red);
+
+            return interaction.editReply({ embeds: [embed], ephemeral: true });
+        }
+
+
+        if (!interaction.member.roles.cache.has(ROLE_ID)) {
+            const emmbed = new Discord.EmbedBuilder()
+                .setTitle("❌ Error")
+                .setDescription("No tienes permiso para usar este comando, necesitas ser miembro.")
+                .setColor(Discord.Colors.Red);
+            return interaction.editReply({
+                embeds: [emmbed]
+            });
+        }
 
         const email = interaction.options.getString("correo");
         const password = interaction.options.getString("contraseña");
@@ -93,7 +116,7 @@ module.exports = {
         });
 
         if (error) {
-            if(error.message.includes("User already registered")) {
+            if (error.message.includes("User already registered")) {
                 return safeReply(interaction.user, interaction,
                     new Discord.EmbedBuilder()
                         .setTitle("❌ Error")

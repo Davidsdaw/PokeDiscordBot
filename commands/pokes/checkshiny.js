@@ -6,14 +6,36 @@ module.exports = {
         .setName("checkshiny")
         .setDescription("Verifica tus Pokémon shiny o los de otro usuario")
         .setContexts([Discord.ApplicationCommandType.ChatInput])
-        .addUserOption(option => 
+        .addUserOption(option =>
             option.setName("usuario")
-                  .setDescription("Usuario de Discord a revisar")
-                  .setRequired(false) // opcional
+                .setDescription("Usuario de Discord a revisar")
+                .setRequired(false) // opcional
         ),
 
     async execute(interaction) {
         await interaction.deferReply();
+
+        const ROLE_ID = process.env.ROLE_ID;
+        if (!interaction.member.roles.cache.has(ROLE_ID)) {
+            const emmbed = new Discord.EmbedBuilder()
+                .setTitle("❌ Error")
+                .setDescription("No tienes permiso para usar este comando, necesitas ser miembro.")
+                .setColor(Discord.Colors.Red);
+            return interaction.editReply({
+                embeds: [emmbed]
+            });
+        }
+
+        const ALLOWED_CHANNEL_ID = process.env.ALLOWED_CHANNEL_ID;
+
+        if (interaction.channelId !== ALLOWED_CHANNEL_ID) {
+            const embed = new Discord.EmbedBuilder()
+                .setTitle("❌ Canal incorrecto")
+                .setDescription("Este comando solo puede usarse en el canal autorizado.")
+                .setColor(Discord.Colors.Red);
+
+            return interaction.editReply({ embeds: [embed], ephemeral: true });
+        }
 
         // 1️⃣ Determinar a quién revisar
         const targetUser = interaction.options.getUser("usuario") || interaction.user;
