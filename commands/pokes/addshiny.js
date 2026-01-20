@@ -77,12 +77,12 @@ module.exports = {
 
         const ROLE_ID = process.env.ROLE_ID;
         if (!interaction.member.roles.cache.has(ROLE_ID)) {
-            const emmbed = new Discord.EmbedBuilder()
+            const embed = new Discord.EmbedBuilder()
                 .setTitle("❌ Error")
                 .setDescription("No tienes permiso para usar este comando, necesitas ser miembro.")
                 .setColor(Discord.Colors.Red);
             return interaction.editReply({
-                embeds: [emmbed]
+                embeds: [{ embeds: [embed], ephemeral: true }]
             });
         }
 
