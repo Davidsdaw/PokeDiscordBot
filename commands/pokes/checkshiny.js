@@ -53,7 +53,7 @@ module.exports = {
                 .setTitle("❌ Error")
                 .setDescription(`El usuario ${targetUser.tag} no está registrado. Usa /register primero.`)
                 .setColor(Discord.Colors.Red);
-            return interaction.editReply({ embeds: [embed] });
+            return interaction.editReply({ embeds: [embed], ephemeral: true  });
         }
 
         // 3️⃣ Obtener shinies del usuario
@@ -76,7 +76,7 @@ module.exports = {
                 .setTitle("❌ Sin shinies")
                 .setDescription(`${targetUser.tag} no tiene ningún Pokémon shiny registrado.`)
                 .setColor(Discord.Colors.Red);
-            return interaction.editReply({ embeds: [embed] });
+            return interaction.editReply({ embeds: [embed], ephemeral: true  });
         }
 
         // 4️⃣ Construir embed con todos los shinies
@@ -98,6 +98,6 @@ module.exports = {
             .setColor(Discord.Colors.Gold)
             .setTimestamp();
 
-        return interaction.editReply({ embeds: [embed] });
+        return interaction.editReply({ embeds: [embed], ephemeral: true  });
     }
 };
