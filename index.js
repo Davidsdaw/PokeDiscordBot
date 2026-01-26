@@ -115,5 +115,5 @@ client.on('interactionCreate', async (interaction) => {
 
 
 
-require('./events/messageLog')(client);
+// require('./events/messageLog')(client);
 client.login(process.env.BOT_TOKEN);
