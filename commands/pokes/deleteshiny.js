@@ -49,10 +49,21 @@ module.exports = {
       });
     }
 
-        const shinyId = interaction.options.getString("shiny_id");
-        const confirm = interaction.options.getBoolean("confirmar");
+    const shinyId = interaction.options.getString("shiny_id");
+    const confirm = interaction.options.getBoolean("confirmar");
 
-        // Obtener shiny
+    const { data: user, errorUser } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("discord_id", interaction.user.id)
+      .maybeSingle();
+
+      if (errorUser) {
+      return interaction.editReply({
+        content: "❌ Primero tienes que estar registrado.",
+      });
+    }
+    // Obtener shiny
     const { data: shiny, errorr } = await supabase
       .from("shinies")
       .select("*")
@@ -61,49 +72,51 @@ module.exports = {
 
     if (!shiny || errorr) {
       return interaction.editReply({
-        content: "❌ No se encontró ningún shiny con ese ID."
+        content: "❌ No se encontró ningún shiny con ese ID.",
       });
     }
 
-    if (!isAdmin && shiny.user_id_fk !== interaction.user.id) {
+    if (!isAdmin && user.id !== shiny.user_id_fk) {
       return interaction.editReply({
-        content: "❌ No puedes eliminar un shiny que no es tuyo."
+        content: "❌ No puedes eliminar un shiny que no es tuyo.",
       });
     }
 
-        if (!confirm) {
-          return interaction.editReply({
-            embeds: [
-              new Discord.EmbedBuilder()
-                .setTitle("❌ Confirmación requerida")
-                .setDescription("Por favor confirma que deseas eliminar este Pokémon shiny.")
-                .setColor(Discord.Colors.Red),
-            ],
-          });
-        }
-        const { data, error } = await supabase
-          .from("shinies")
-          .delete()
-          .eq("id_shiny", shinyId);
-    
-        if (error) {
-          return interaction.editReply({
-            embeds: [
-              new Discord.EmbedBuilder()
-                .setTitle("❌ Error")
-                .setDescription("No se pudo eliminar el Pokémon shiny.")
-                .setColor(Discord.Colors.Red),
-            ],
-          });
-        }
-    
-        return interaction.editReply({
-          embeds: [
-            new Discord.EmbedBuilder()
-              .setTitle("✅ Éxito")
-              .setDescription(`Pokémon ${shinyId} eliminado correctamente.`)
-              .setColor(Discord.Colors.Green),
-          ],
-        });
-      },
-    };
+    if (!confirm) {
+      return interaction.editReply({
+        embeds: [
+          new Discord.EmbedBuilder()
+            .setTitle("❌ Confirmación requerida")
+            .setDescription(
+              "Por favor confirma que deseas eliminar este Pokémon shiny.",
+            )
+            .setColor(Discord.Colors.Red),
+        ],
+      });
+    }
+    const { data, error } = await supabase
+      .from("shinies")
+      .delete()
+      .eq("id_shiny", shinyId);
+
+    if (error) {
+      return interaction.editReply({
+        embeds: [
+          new Discord.EmbedBuilder()
+            .setTitle("❌ Error")
+            .setDescription("No se pudo eliminar el Pokémon shiny.")
+            .setColor(Discord.Colors.Red),
+        ],
+      });
+    }
+
+    return interaction.editReply({
+      embeds: [
+        new Discord.EmbedBuilder()
+          .setTitle("✅ Éxito")
+          .setDescription(`Pokémon ${shinyId} eliminado correctamente.`)
+          .setColor(Discord.Colors.Green),
+      ],
+    });
+  },
+};

@@ -8,7 +8,7 @@ module.exports = {
     .addUserOption((option) =>
       option
         .setName("usuario")
-        .setDescription("Usuario de Discord a revisar")
+        .setDescription("Ve los pokemón shiny de otro usuario")
         .setRequired(false),
     ),
 

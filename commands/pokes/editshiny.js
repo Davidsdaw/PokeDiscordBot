@@ -7,105 +7,120 @@ module.exports = {
     .setDescription("Edita la información de un Pokémon shiny en tu colección")
 
     // ID (OBLIGATORIO)
-    .addStringOption(option =>
+    .addStringOption((option) =>
       option
         .setName("shiny_id")
         .setDescription("ID del Pokémon shiny a editar")
-        .setRequired(true)
+        .setRequired(true),
     )
 
     // OPCIONALES
-    .addStringOption(option =>
+    .addStringOption((option) =>
       option
         .setName("pokemon")
         .setDescription("Nombre del Pokémon shiny")
-        .setRequired(false)
+        .setRequired(false),
     )
-    .addStringOption(option =>
+    .addStringOption((option) =>
       option
         .setName("metodo")
         .setDescription("Método de obtención del shiny")
         .setRequired(false)
         .addChoices(
-                { name: 'Huevos', value: 'Huevo' },
-                { name: 'Horda', value: 'Horda' },
-                { name: 'Single', value: 'Single' },
-                { name: 'Safari', value: 'Safari' },
-                { name: 'Evento', value: 'Evento' },
-                { name: 'Pokeball', value: 'Pokeball' },
-                { name: 'Fosil', value: 'Fosil' },
-                { name: 'Manada', value: 'Manada' },
-        )
+          { name: "Huevos", value: "Huevo" },
+          { name: "Horda", value: "Horda" },
+          { name: "Single", value: "Single" },
+          { name: "Safari", value: "Safari" },
+          { name: "Evento", value: "Evento" },
+          { name: "Pokeball", value: "Pokeball" },
+          { name: "Fosil", value: "Fosil" },
+          { name: "Manada", value: "Manada" },
+        ),
     )
-    .addNumberOption(option =>
-      option.setName("año").setDescription("Año de obtención").setRequired(false)
+    .addNumberOption((option) =>
+      option
+        .setName("año")
+        .setDescription("Año de obtención")
+        .setRequired(false),
     )
-    .addNumberOption(option =>
-      option.setName("mes").setDescription("Mes de obtención").setRequired(false)
+    .addNumberOption((option) =>
+      option
+        .setName("mes")
+        .setDescription("Mes de obtención")
+        .setRequired(false),
     )
-    .addNumberOption(option =>
-      option.setName("dia").setDescription("Día de obtención").setRequired(false)
+    .addNumberOption((option) =>
+      option
+        .setName("dia")
+        .setDescription("Día de obtención")
+        .setRequired(false),
     )
-    .addStringOption(option =>
-      option.setName("ruta").setDescription("Ruta").setRequired(false)
+    .addStringOption((option) =>
+      option.setName("ruta").setDescription("Ruta").setRequired(false),
     )
     // IVs
-    .addNumberOption(option =>
-      option.setName("ps").setDescription("IV PS").setRequired(false)
+    .addNumberOption((option) =>
+      option.setName("ps").setDescription("IV PS").setRequired(false),
     )
-    .addNumberOption(option =>
-      option.setName("atk").setDescription("IV ATK").setRequired(false)
+    .addNumberOption((option) =>
+      option.setName("atk").setDescription("IV ATK").setRequired(false),
     )
-    .addNumberOption(option =>
-      option.setName("def").setDescription("IV DEF").setRequired(false)
+    .addNumberOption((option) =>
+      option.setName("def").setDescription("IV DEF").setRequired(false),
     )
-    .addNumberOption(option =>
-      option.setName("spa").setDescription("IV SPA").setRequired(false)
+    .addNumberOption((option) =>
+      option.setName("spa").setDescription("IV SPA").setRequired(false),
     )
-    .addNumberOption(option =>
-      option.setName("spd").setDescription("IV SPD").setRequired(false)
+    .addNumberOption((option) =>
+      option.setName("spd").setDescription("IV SPD").setRequired(false),
     )
-    .addNumberOption(option =>
-      option.setName("spe").setDescription("IV SPE").setRequired(false)
+    .addNumberOption((option) =>
+      option.setName("spe").setDescription("IV SPE").setRequired(false),
     )
-    .addBooleanOption(option =>
-      option.setName("secret").setDescription("¿Es shiny secreto?").setRequired(false)
+    .addBooleanOption((option) =>
+      option
+        .setName("secret")
+        .setDescription("¿Es shiny secreto?")
+        .setRequired(false),
     )
-    .addBooleanOption(option =>
-      option.setName("alpha").setDescription("¿Es shiny alpha?").setRequired(false)
+    .addBooleanOption((option) =>
+      option
+        .setName("alpha")
+        .setDescription("¿Es shiny alpha?")
+        .setRequired(false),
     )
-    .addStringOption(option =>
+    .addStringOption((option) =>
       option
         .setName("naturaleza")
         .setDescription("Naturaleza del shiny")
         .setRequired(false)
         .addChoices(
-                { name: 'Osada', value: 'Osada' },
-                { name: 'Modesta', value: 'Modesta' },
-                { name: 'Serena', value: 'Serena' },
-                { name: 'Miedosa', value: 'Miedosa' },
-                { name: 'Huraña', value: 'Huraña' },
-                { name: 'Afable', value: 'Afable' },
-                { name: 'Amable', value: 'Amable' },
-                { name: 'Activa', value: 'Activa' },
-                { name: 'Firme', value: 'Firme' },
-                { name: 'Agitada', value: 'Agitada' },
-                { name: 'Cauta', value: 'Cauta' },
-                { name: 'Alegre', value: 'Alegre' },
-                { name: 'Pícara', value: 'Picara' },
-                { name: 'Floja', value: 'Floja' },
-                { name: 'Alocada', value: 'Alocada' },
-                { name: 'Ingenua', value: 'Ingenua' },
-                { name: 'Audaz', value: 'Audaz' },
-                { name: 'Plácida', value: 'Placida' },
-                { name: 'Mansa', value: 'Mansa' },
-                { name: 'Grosera', value: 'Grosera' },
-                { name: 'Fuerte', value: 'Fuerte' },
-                { name: 'Dócil', value: 'Docil' },
-                { name: 'Seria', value: 'Seria' },
-                { name: 'Tímida', value: 'Timida' },
-                { name: 'Rara', value: 'Rara' },
-        )
+          { name: "Osada", value: "Osada" },
+          { name: "Modesta", value: "Modesta" },
+          { name: "Serena", value: "Serena" },
+          { name: "Miedosa", value: "Miedosa" },
+          { name: "Huraña", value: "Huraña" },
+          { name: "Afable", value: "Afable" },
+          { name: "Amable", value: "Amable" },
+          { name: "Activa", value: "Activa" },
+          { name: "Firme", value: "Firme" },
+          { name: "Agitada", value: "Agitada" },
+          { name: "Cauta", value: "Cauta" },
+          { name: "Alegre", value: "Alegre" },
+          { name: "Pícara", value: "Picara" },
+          { name: "Floja", value: "Floja" },
+          { name: "Alocada", value: "Alocada" },
+          { name: "Ingenua", value: "Ingenua" },
+          { name: "Audaz", value: "Audaz" },
+          { name: "Plácida", value: "Placida" },
+          { name: "Mansa", value: "Mansa" },
+          { name: "Grosera", value: "Grosera" },
+          { name: "Fuerte", value: "Fuerte" },
+          { name: "Dócil", value: "Docil" },
+          { name: "Seria", value: "Seria" },
+          { name: "Tímida", value: "Timida" },
+          { name: "Rara", value: "Rara" },
+        ),
     ),
 
   async execute(interaction) {
@@ -117,12 +132,16 @@ module.exports = {
     const isAdmin = interaction.member.roles.cache.has(ADMIN_ROLE_ID);
 
     if (!interaction.member.roles.cache.has(ROLE_ID)) {
-      return interaction.editReply("❌ No tienes permiso para usar este comando.");
+      return interaction.editReply(
+        "❌ No tienes permiso para usar este comando.",
+      );
     }
 
     const ALLOWED_CHANNEL_ID = process.env.ALLOWED_CHANNEL_ID;
     if (interaction.channelId !== ALLOWED_CHANNEL_ID) {
-      return interaction.editReply("❌ Este comando solo puede usarse en el canal autorizado.");
+      return interaction.editReply(
+        "❌ Este comando solo puede usarse en el canal autorizado.",
+      );
     }
 
     // ===== OBTENER SHINY =====
@@ -135,7 +154,9 @@ module.exports = {
       .maybeSingle();
 
     if (!shiny || error) {
-      return interaction.editReply("❌ No se encontró ningún shiny con ese ID.");
+      return interaction.editReply(
+        "❌ No se encontró ningún shiny con ese ID.",
+      );
     }
 
     const { data: user, errorUser } = await supabase
@@ -144,9 +165,12 @@ module.exports = {
       .eq("discord_id", interaction.user.id)
       .maybeSingle();
 
+
     // Validar propiedad
-    if (!isAdmin && user.discord_id !== interaction.user.id) {
-      return interaction.editReply("❌ No puedes editar un shiny que no es tuyo.");
+    if (!isAdmin && user.id !== shiny.user_id_fk) {
+      return interaction.editReply(
+        "❌ No puedes editar un shiny que no es tuyo.",
+      );
     }
 
     // ===== CONSTRUIR UPDATE DINÁMICO =====
@@ -172,7 +196,14 @@ module.exports = {
     if (alpha !== null) updatedData.is_alpha = alpha;
 
     // ===== IVs (JSON) =====
-    let ivs = shiny.ivs?.[0] || { ps: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
+    let ivs = shiny.ivs?.[0] || {
+      ps: 0,
+      atk: 0,
+      def: 0,
+      spa: 0,
+      spd: 0,
+      spe: 0,
+    };
 
     const ps = interaction.options.getNumber("ps");
     if (ps !== null) ivs.ps = ps;
@@ -199,15 +230,22 @@ module.exports = {
     const month = interaction.options.getNumber("mes");
     const day = interaction.options.getNumber("dia");
 
+    if ((year !== null || month !== null || day !== null) && !(year !== null && month !== null && day !== null)) {
+      return interaction.editReply(
+      "⚠️ Para actualizar la fecha, debes proporcionar el año, mes y día.",
+      );
+    }
+
+    //COMPROBAR VALIDACIONES DE FECHA, ESTÁ MAL HECHO COPIAR DE ADDSHINY
     if (year !== null && month !== null && day !== null) {
       updatedData.date_caught = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-    } else {
-        return interaction.editReply("⚠️ Para actualizar la fecha, debes proporcionar el año, mes y día.");
     }
 
     // Nada que actualizar
     if (Object.keys(updatedData).length === 0) {
-      return interaction.editReply("⚠️ No has proporcionado ningún campo para actualizar.");
+      return interaction.editReply(
+        "⚠️ No has proporcionado ningún campo para actualizar.",
+      );
     }
 
     // ===== UPDATE =====
@@ -217,11 +255,13 @@ module.exports = {
       .eq("id_shiny", shinyId);
 
     if (updateError) {
-      return interaction.editReply(`❌ Error al actualizar el shiny: ${updateError.message}`);
+      return interaction.editReply(
+        `❌ Error al actualizar el shiny: ${updateError.message}`,
+      );
     }
 
     return interaction.editReply(
-      `✅ **${shiny.pokemon_name}** actualizado correctamente.`
+      `✅ **${shiny.pokemon_name}** actualizado correctamente.`,
     );
   },
 };
