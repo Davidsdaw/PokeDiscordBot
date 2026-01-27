@@ -15,7 +15,8 @@ module.exports = {
                 { name: 'Safari', value: 'Safari' },
                 { name: 'Evento', value: 'Evento' },
                 { name: 'Pokeball', value: 'Pokeball' },
-                { name: 'Fosil', value: 'Fosil' }
+                { name: 'Fosil', value: 'Fosil' },
+                { name: 'Manada', value: 'Manada' },
             ))
         .addNumberOption(option => option.setName("año").setDescription("Año en que se obtuvo el shiny").setRequired(true))
         .addNumberOption(option => option.setName("mes").setDescription("Mes en que se obtuvo el shiny").setRequired(true))
@@ -27,7 +28,8 @@ module.exports = {
         .addNumberOption(option => option.setName("spa").setDescription("IVs SPA shiny").setRequired(true))
         .addNumberOption(option => option.setName("spd").setDescription("IVs SPD shiny").setRequired(true))
         .addNumberOption(option => option.setName("spe").setDescription("IVs SPE shiny").setRequired(true))
-        .addBooleanOption(option => option.setName("secret").setDescription("¿Es un Shiny secret ?").setRequired(true))
+        .addBooleanOption(option => option.setName("secret").setDescription("¿Es un Shiny secret?").setRequired(true))
+        .addBooleanOption(option => option.setName("alpha").setDescription("¿Es un Shiny Alpha?").setRequired(true))
         .addStringOption(option => option.setName("naturaleza").setDescription("Naturaleza del shiny").setRequired(true)
             .addChoices(
                 { name: 'Osada', value: 'Osada' },
@@ -73,6 +75,7 @@ module.exports = {
         const spd = interaction.options.getNumber("spd");
         const spe = interaction.options.getNumber("spe");
         const secret = interaction.options.getBoolean("secret");
+        const alpha = interaction.options.getBoolean("alpha");
         const naturaleza = interaction.options.getString("naturaleza");
 
         const ROLE_ID = process.env.ROLE_ID;
@@ -178,6 +181,7 @@ module.exports = {
                         route_caught: ruta,
                         ivs: jsonIvs,
                         is_secret: secret,
+                        is_alpha: alpha,
                         naturaleza: naturaleza
                     }
                 ]);
